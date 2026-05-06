@@ -3,7 +3,7 @@
   "short_name": "أذكار",
   "description": "تطبيق أذكار الصباح والمساء الصحيحة",
   "start_url": "/azkar/",
-  "scope": "/",
+  "scope": "/azkar/",
   "display": "standalone",
   "background_color": "#f5f5f5",
   "theme_color": "#2e7d32",
