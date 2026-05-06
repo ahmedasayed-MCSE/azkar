@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صحيح أذكار الصباح والمساء</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --bg-color: #f5f5f5;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --battery-red: #ff3d00;
+            --battery-green: #00c853;
+        }
+
+        /* إصلاح انحراف الصفحة */
+        html {
+            overflow-y: scroll; /* يحافظ على مكان شريط التمرير دائماً لمنع القفز */
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            padding-bottom: 30px;
+            overflow-x: hidden; /* يمنع ظهور شريط تمرير أفقي أثناء حركة الاختفاء */
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.1rem;
+            flex: 1;
+        }
+
+        .battery-wrapper {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .battery-body {
+            width: 40px;
+            height: 18px;
+            border: 2px solid white;
+            border-radius: 4px;
+            padding: 2px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .battery-fill {
+            height: 100%;
+            border-radius: 2px;
+            width: 1%;
+            background-color: var(--battery-red);
+            transition: width 0.4s ease-out, background-color 0.4s ease-out;
+        }
+
+        .battery-terminal {
+            width: 4px;
+            height: 8px;
+            background-color: white;
+            border-radius: 0 2px 2px 0;
+            margin-right: -1px;
+        }
+
+        .battery-percentage-text {
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-left: 6px;
+            min-width: 35px;
+            text-align: left;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .zikr-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: transform 0.1s ease, opacity 0.5s ease;
+            border-right: 5px solid var(--primary-color);
+            will-change: transform, opacity, height;
+            position: relative; /* لضمان استقرار الحركة */
+        }
+
+        .zikr-card:active {
+            transform: scale(0.97);
+            background-color: #e8f5e9;
+        }
+
+        .zikr-text {
+            flex: 1;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-color);
+            padding-left: 15px;
+        }
+
+        .counter-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 50px;
+        }
+
+        .counter-box {
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hint-text {
+            font-size: 10px;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        .fade-out-active {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.5s ease, transform 0.5s ease, height 0.5s ease, margin 0.5s ease, padding 0.5s ease !important;
+        }
+
+        .refresh-btn {
+            display: block;
+            margin: 30px auto;
+            padding: 12px 30px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
+            transition: background-color 0.2s;
+        }
+
+        .refresh-btn:active {
+             background-color: #1b5e20;
+             transform: translateY(2px);
+        }
+        
+        .note {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 5px;
+            display: block;
+        }
+    </style>
+    <meta name="theme-color" content="#2e7d32">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="أذكار">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/ICON-192.png">
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <h1>صحيح أذكار الصباح والمساء</h1>
+        <div class="battery-wrapper">
+            <div class="battery-body">
+                <div class="battery-fill" id="battery-fill"></div>
+            </div>
+            <div class="battery-terminal"></div>
+            <span class="battery-percentage-text" id="battery-percent">1%</span>
+        </div>
+    </div>
+</header>
+
+<div class="container" id="athkar-list"></div>
+
+<button class="refresh-btn" onclick="location.reload()">إعادة تحميل الأذكار</button>
+
+<script>
+    const athkarData = [
+        { count: 1, text: "اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ وَلَا يَئُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ" },
+        { count: 3, text: "قُلْ هُوَ اللَّهُ أَحَدٌ" },
+        { count: 3, text: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ" },
+        { count: 3, text: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ" },
+        { count: 1, text: "أَصْبَحْنَا عَلَى فِطْرَةِ الْإِسْلَامِ، وَعَلَى كَلِمَةِ الْإِخْلَاصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ ﷺ، وَعَلَى مِلَّةِ أَبِينَا إِبْرَاهِيمَ حَنِيفًا مُسْلِمًا وَمَا كَانَ مِنَ الْمُشْرِكِينَ.<br><span class='note'>(في المساء: أمسينا على فطرة الإسلام...)</span>" },
+        { count: 1, text: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ لا إِلَهَ إِلَا اللَّهُ، وَحْدَهُ لا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ...<br><span class='note'>(في المساء: أمسينا وأمسى الملك لله...)</span>" },
+        { count: 3, text: "اللَّهُمَّ أَنْتَ رَبِّي لا إِلَهَ إِلا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لا يَغْفِرُ الذُّنُوبَ إِلا أَنْتَ" },
+        { count: 3, text: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ" },
+        { count: 1, text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ فِي الدُّنْيَا وَالآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَايَ وَأَهْلِي وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي وَآمِنْ رَوْعَاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ وَمِنْ خَلْفِي وَعَنْ يَمِينِي وَعَنْ شِمَالِي وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي" },
+        { count: 1, text: "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ، وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ" },
+        { count: 3, text: "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ ﷺ نَبِيًّا" },
+        { count: 100, text: "سُبْحَانَ اللهِ وَبِحَمْدِهِ" },
+        { count: 100, text: "لاَ إِلَهَ إِلاَّ اللهُ، وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِير" },
+        { count: 3, text: "أعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَق <br><span class='note'>(في المساء فقط)</span>" }
+    ];
+
+    const container = document.getElementById('athkar-list');
+    const batteryFillEl = document.getElementById('battery-fill');
+    const batteryPercentEl = document.getElementById('battery-percent');
+
+    let totalRequiredClicks = 0;
+    let currentClicks = 0;
+
+    function calculateTotalClicks() {
+        totalRequiredClicks = athkarData.reduce((sum, zikr) => sum + zikr.count, 0);
+        updateBatteryUI();
+    }
+
+    function updateBatteryUI() {
+        let percentage = 1;
+        
+        if (totalRequiredClicks > 0 && currentClicks > 0) {
+            percentage = (currentClicks / totalRequiredClicks) * 100;
+        }
+        
+        percentage = Math.min(100, Math.max(1, percentage));
+        const roundedPercentage = Math.round(percentage);
+
+        batteryFillEl.style.width = `${percentage}%`;
+        batteryPercentEl.innerText = `${roundedPercentage}%`;
+
+        let red, green;
+        if (percentage < 50) {
+            red = 255;
+            green = Math.round(255 * (percentage / 50));
+        } else {
+            red = Math.round(255 * ((100 - percentage) / 50));
+            green = 255;
+        }
+        batteryFillEl.style.backgroundColor = `rgb(${red}, ${green}, 0)`;
+    }
+
+
+    function renderAthkar() {
+        athkarData.forEach((zikr, index) => {
+            const card = document.createElement('div');
+            card.className = 'zikr-card';
+            card.id = `card-${index}`;
+            
+            card.onclick = () => {
+                updateCount(index);
+            };
+
+            const textDiv = document.createElement('div');
+            textDiv.className = 'zikr-text';
+            textDiv.innerHTML = zikr.text;
+
+            const wrapperDiv = document.createElement('div');
+            wrapperDiv.className = 'counter-wrapper';
+
+            if (index === 0) {
+                const hintSpan = document.createElement('span');
+                hintSpan.className = 'hint-text';
+                hintSpan.innerText = 'اضغط هنا';
+                wrapperDiv.appendChild(hintSpan);
+            }
+
+            const counterDiv = document.createElement('div');
+            counterDiv.className = 'counter-box';
+            counterDiv.id = `counter-${index}`;
+            counterDiv.innerText = zikr.count;
+
+            wrapperDiv.appendChild(counterDiv);
+            card.appendChild(textDiv);
+            card.appendChild(wrapperDiv);
+            container.appendChild(card);
+        });
+    }
+
+    function updateCount(index) {
+        const counterElement = document.getElementById(`counter-${index}`);
+        const cardElement = document.getElementById(`card-${index}`);
+        
+        let currentCount = parseInt(counterElement.innerText);
+
+        if (currentCount > 0) {
+            currentCount--;
+            counterElement.innerText = currentCount;
+
+            currentClicks++;
+            updateBatteryUI();
+
+            if (currentCount === 0) {
+                cardElement.style.height = cardElement.offsetHeight + 'px';
+                cardElement.style.pointerEvents = 'none';
+
+                void cardElement.offsetWidth; 
+
+                cardElement.classList.add('fade-out-active');
+                cardElement.style.height = '0';
+                cardElement.style.marginTop = '0';
+                cardElement.style.marginBottom = '0';
+                cardElement.style.paddingTop = '0';
+                cardElement.style.paddingBottom = '0';
+                cardElement.style.border = 'none';
+
+                setTimeout(() => {
+                    cardElement.remove();
+                }, 550);
+            }
+        }
+    }
+
+    calculateTotalClicks();
+    renderAthkar();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  });
+}
+</script>
+</body>
+</html>
