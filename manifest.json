@@ -2,7 +2,7 @@
   "name": "صحيح أذكار الصباح والمساء",
   "short_name": "أذكار",
   "description": "تطبيق أذكار الصباح والمساء الصحيحة",
-  "start_url": "/",
+  "start_url": "/azkar/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#f5f5f5",
@@ -18,13 +18,13 @@
       "purpose": "any"
     },
     {
-      "src": "icons/ICON-512.jpeg",
+      "src": "icons/ICON-512.png",
       "sizes": "512x512",
       "type": "image/jpeg",
       "purpose": "any"
     },
     {
-      "src": "icons/ICON-512.jpeg",
+      "src": "icons/ICON-512.png",
       "sizes": "512x512",
       "type": "image/jpeg",
       "purpose": "maskable"
